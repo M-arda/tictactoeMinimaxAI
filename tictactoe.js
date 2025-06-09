@@ -74,6 +74,7 @@ function updateBoard() {
         for (let col = 0; col < board[row].length; col++) {
             let cell = document.querySelector(`#cell${row}${col}`);
             cell.textContent = board[row][col];
+            cell.style.color = '#c4c4c4';
         }
     }
 }
@@ -102,7 +103,14 @@ function cellClicked(row, col) {
     let finishState = isOver(board);
     if (finishState.finished) {
         if (finishState.winner == 'draw') durumCubugu.textContent = `Berabere`;
-        else durumCubugu.textContent = `${finishState.winner} kazandı`;
+        else {
+            durumCubugu.textContent = `${finishState.winner} kazandı`;
+            console.log(finishState.winningCells)
+            for (let index = 0; index < finishState.winningCells.length; index++) {
+                const element = finishState.winningCells[index];
+                element.style.color = '#0f0';
+            }
+        }
 
         over = true;
         return;
@@ -134,11 +142,12 @@ function isOver(boardToCheck) {
 
         if (firstCell === '' || secondCell === '' || thirdCell === '') continue;
 
-        else if (firstCell === secondCell && firstCell === thirdCell && secondCell === thirdCell) {
+        else if (firstCell === secondCell && firstCell === thirdCell) {
             // console.log("kazanan")
             return {
                 finished: true,
                 winner: firstCell,
+                winningCells: document.querySelectorAll(`#cell${condition[0].row}${condition[0].col}, #cell${condition[1].row}${condition[1].col}, #cell${condition[2].row}${condition[2].col}`),
             };
         }
     }
