@@ -1,5 +1,3 @@
-const cells = document.querySelectorAll('.cell');
-// console.log(cells)
 const durumCubugu = document.getElementById('durum');
 let player1 = {
     type: 'human',
@@ -27,12 +25,11 @@ let letterBtnO = document.querySelector('#letterO');
 
 for (let row = 0; row < board.length; row++) {
     for (let col = 0; col < board[row].length; col++) {
-        let cell = document.querySelector(`#cell${row}${col}`)
+        let cell = document.querySelector(`#cell${row}${col}`);
         // board[row][col] = '';
         cell.addEventListener('click', () => cellClicked(row, col));
     }
 }
-
 
 function baslat() {
 
@@ -48,7 +45,6 @@ function baslat() {
         human = player1;
         ai = player2;
     }
-
     durumCubugu.textContent = 'X sırası';
     turn = player1;
     over = false;
@@ -108,7 +104,7 @@ function cellClicked(row, col) {
             console.log(finishState.winningCells)
             for (let index = 0; index < finishState.winningCells.length; index++) {
                 const element = finishState.winningCells[index];
-                element.style.color = '#0f0';
+                document.querySelector(`#cell${element.row}${element.col}`).style.color = '#0f0';
             }
         }
 
@@ -147,7 +143,7 @@ function isOver(boardToCheck) {
             return {
                 finished: true,
                 winner: firstCell,
-                winningCells: document.querySelectorAll(`#cell${condition[0].row}${condition[0].col}, #cell${condition[1].row}${condition[1].col}, #cell${condition[2].row}${condition[2].col}`),
+                winningCells: condition,
             };
         }
     }
